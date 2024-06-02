@@ -5,7 +5,7 @@ const http = require('http');
 const axios = require('axios'); // Make sure to install axios via npm
 
 const TCP_PORT = 1883;
-const WS_PORT = 8881;
+const WS_PORT = 8883;
 
 // Start TCP MQTT server
 const netServer = net.createServer(aedes.handle);
