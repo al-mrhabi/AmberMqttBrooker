@@ -40,7 +40,7 @@ aedes.on('publish', async (packet, client) => {
 
   console.log(`Received message from ${client.id}: topic ${packet.topic}, payload ${packet.payload.toString()}`);
 
-  const payloadData = packet.payload.toString().split(",");
+  const payloadData = packet.payload.toString().replace(/[{}]/g, '').split(',');
   // const pointId = payloadData[0];
   const token = payloadData[0];
   const siteId = payloadData[1];
