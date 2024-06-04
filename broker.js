@@ -46,7 +46,7 @@ aedes.on('publish', async (packet, client) => {
   const siteId = payloadData[1];
 
  console.log("token",token)
-onsole.log("siteId",siteId)
+console.log("siteId",siteId)
   // Fetch current prices based on the siteId and token extracted from payload
   const priceData = await fetchCurrentPrices(siteId, token);
   const responsePayload = JSON.stringify([{ pointId: "price", value:priceData[0].perKwh },{ pointId: "soler", value:priceData[1].perKwh }]);
