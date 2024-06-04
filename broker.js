@@ -40,14 +40,17 @@ aedes.on('publish', async (packet, client) => {
 
   console.log(`Received message from ${client.id}: topic ${packet.topic}, payload ${packet.payload.toString()}`);
 
-  const payloadData = packet.payload.toString().split(",");
-  const pointId = payloadData[0];
-  const token = payloadData[1];
-  const siteId = payloadData[2];
+  // const payloadData = packet.payload.toString().split(",");
+  // const pointId = payloadData[0];
+  // const token = payloadData[1];
+  // const siteId = payloadData[2];
+
+  const siteId = '01HM1EV6CNS6VQKH2CQ4GDQ7FK';
+  const token = 'psk_efc22d62611a057fc244c76554b2f061';
 
   // Fetch current prices based on the siteId and token extracted from payload
   const priceData = await fetchCurrentPrices(siteId, token);
-const responsePayload = JSON.stringify({ pointId: "price", value:priceData[0].perKwh });
+  const responsePayload = JSON.stringify({ pointId: "price", value:priceData[0].perKwh });
 
  // console.log(priceData)
   // Publish the fetched prices to a topic
