@@ -5,7 +5,7 @@ const http = require('http');
 const axios = require('axios'); // Make sure to install axios via npm
 
 const TCP_PORT = 1883;
-const WS_PORT = 8881;
+const WS_PORT = 8883;
 
 // Start TCP MQTT server
 const netServer = net.createServer(aedes.handle);
@@ -39,16 +39,17 @@ aedes.on('publish', async (packet, client) => {
   if (!client) return; // Ignore messages published by the broker itself
 
   console.log(`Received message from ${client.id}: topic ${packet.topic}, payload ${packet.payload.toString()}`);
-
-  const payloadData = packet.payload.toString().split(",");
-  const pointId = payloadData[0];
-  const token = payloadData[1];
-  const siteId = payloadData[2];
-
+  const payloadData = packet.payload.toString().replace(/[{}]/g, '').split(',');
+  //const payloadData = packet.payload.toString().split(",");
+  const token = payloadData[2];
+  const siteId = payloadData[3];
+  const pointId2 = payloadData[1];
+  const pointId1 = payloadData[0];
   // Fetch current prices based on the siteId and token extracted from payload
   const priceData = await fetchCurrentPrices(siteId, token);
-  const responsePayload = JSON.stringify({ pointId: "price", value:priceData[0].perKwh });
-
+  //const responsePayload = JSON.stringify([{ pointId1: "price", value:priceData[0].perKwh },{ pointId2: "Solar", value:priceData[1].perKwh }]);
+  const responsePayload = JSON.stringify([{ pointId: "price", value:priceData[0].perKwh },{ pointId: "Solar", value:priceData[1].perKwh }]);
+  //const responsePayload = JSON.stringify({ pointId: "price", value:22});
  // console.log(priceData)
   // Publish the fetched prices to a topic
   aedes.publish({ topic: "response/prices", payload: responsePayload });
