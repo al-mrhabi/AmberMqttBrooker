@@ -43,11 +43,12 @@ aedes.on('publish', async (packet, client) => {
   //const payloadData = packet.payload.toString().split(",");
   const token = payloadData[3];
   const siteId = payloadData[2];
-  //const pointId2 = payloadData[1];
- // const pointId1 = payloadData[0];
+ // const pointId1 = payloadData[1];
+  //const pointId2 = payloadData[0];
+ // console.log(payloadData)
   // Fetch current prices based on the siteId and token extracted from payload
   const priceData = await fetchCurrentPrices(siteId, token);
-  //const responsePayload = JSON.stringify([{ pointId1: "price", value:priceData[0].perKwh },{ pointId2: "Solar", value:priceData[1].perKwh }]);
+  //const responsePayload = JSON.stringify([{ pointId: "price", value:111},{ pointId: "Solar", value:555 }]);
   const responsePayload = JSON.stringify([{ pointId: "price", value:priceData[0].perKwh },{ pointId: "Solar", value:priceData[1].perKwh }]);
   //const responsePayload = JSON.stringify({ pointId: "price", value:22});
  // console.log(priceData)
